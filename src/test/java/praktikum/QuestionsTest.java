@@ -1,5 +1,6 @@
 package praktikum;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,30 +18,26 @@ public class QuestionsTest {
     public DriverRule driverRule = new DriverRule();
     private final int id;
     private final String answer;
+    private WebDriver driver;
 
     public QuestionsTest(int id, String answer) {
         this.id = id;
         this.answer = answer;
     }
 
+    @Before
+    public void before(){
+        driver = driverRule.getDriver();
+    }
+
     @Parameterized.Parameters
     public static Object[][] getCredentials() {
-        return new Object[][] {
-                TestValues.ANSWER_TEST1,
-                TestValues.ANSWER_TEST2,
-                TestValues.ANSWER_TEST3,
-                TestValues.ANSWER_TEST4,
-                TestValues.ANSWER_TEST5,
-                TestValues.ANSWER_TEST6,
-                TestValues.ANSWER_TEST7,
-                TestValues.ANSWER_TEST8,
+        return TestValues.ANSWER_TEST;
 
-        };
     }
 
     @Test
     public void positiveQuestionsTest(){
-        WebDriver driver = driverRule.getDriver();
         MainPage main = new MainPage(driver);
         main.open();
         main.divQuestionByIdClick(id);

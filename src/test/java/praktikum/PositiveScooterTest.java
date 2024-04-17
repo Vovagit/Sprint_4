@@ -1,6 +1,7 @@
 package praktikum;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +30,7 @@ public class PositiveScooterTest {
     private final String comment;
     private final String successHeader;
     private OrderPage order;
+    private WebDriver driver;
 
     public PositiveScooterTest(String orderButton, String firstName, String lastName, String address, String metroName, String phoneNumber, String data, String time, String color, String comment, String successHeader) {
         this.orderButton = orderButton;
@@ -44,18 +46,20 @@ public class PositiveScooterTest {
         this.successHeader = successHeader;
     }
 
+    @Before
+    public void before(){
+        driver = driverRule.getDriver();
+    }
+
     @Parameterized.Parameters
     public static Object[][] getCredentials() {
-        return new Object[][] {
-                TestValues.ORDER_TEST1,
-                TestValues.ORDER_TEST2,
-        };
+        return TestValues.ORDER_TEST;
+
     }
 
     @Test
     public void positiveOrderFlow(){
 
-        WebDriver driver = driverRule.getDriver();
         MainPage main = new MainPage(driver);
         main.open();
 
